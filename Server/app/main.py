@@ -1,0 +1,31 @@
+from fastapi import FastAPI, Request, status
+from fastapi.responses import JSONResponse
+from app.api.routes import health
+from app.utils.logger import logger
+from app.core.config import settings
+import traceback
+
+app = FastAPI(title="SocityOne API", version="1.0.0")
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    """
+    Global exception handler that logs the error with its full traceback.
+    """
+    error_msg = f"Unhandled exception at {request.method} {request.url}\n{traceback.format_exc()}"
+    logger.error(error_msg)
+    
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "message": "An internal server error occurred.", 
+            "details": str(exc) if settings.IS_DEV else "Internal Server Error"
+        },
+    )
+
+# Include the health router
+app.include_router(health.router, prefix="/health", tags=["Health"])
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info(f"Starting up SocityOne API in {settings.ENVIRONMENT} mode.")
