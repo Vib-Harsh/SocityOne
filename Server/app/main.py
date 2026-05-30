@@ -3,9 +3,11 @@ from fastapi.responses import JSONResponse
 from app.api.routes import health
 from app.utils.logger import logger
 from app.core.config import settings
+from app.core.database import engine, Base
 import traceback
 
-app = FastAPI(title="SocityOne API", version="1.0.0")
+
+app = FastAPI(title="SocietyOne API", version="1.0.0")
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
@@ -22,10 +24,13 @@ async def global_exception_handler(request: Request, exc: Exception):
             "details": str(exc) if settings.IS_DEV else "Internal Server Error"
         },
     )
-
-# Include the health router
+    
 app.include_router(health.router, prefix="/health", tags=["Health"])
+
+
+
+Base.metadata.create_all(bind=engine)
 
 @app.on_event("startup")
 async def startup_event():
-    logger.info(f"Starting up SocityOne API in {settings.ENVIRONMENT} mode.")
+    logger.info(f"Starting up SocietyOne API in {settings.ENVIRONMENT} mode.")
