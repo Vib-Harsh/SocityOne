@@ -1,14 +1,15 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
-from app.api.routes import health
+from app.api.routes import api_router
 from app.utils.logger import logger
 from app.core.config import settings
-from app.core.database import engine, Base
+from app.core.database import init_db
 import traceback
 
 
 app = FastAPI(title="SocietyOne API", version="1.0.0")
 
+init_db()
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """
@@ -24,12 +25,8 @@ async def global_exception_handler(request: Request, exc: Exception):
             "details": str(exc) if settings.IS_DEV else "Internal Server Error"
         },
     )
-    
-app.include_router(health.router, prefix="/health", tags=["Health"])
 
-
-
-Base.metadata.create_all(bind=engine)
+app.include_router(api_router)
 
 @app.on_event("startup")
 async def startup_event():

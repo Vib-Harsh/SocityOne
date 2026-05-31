@@ -4,3 +4,5 @@ python-dotenv
 colorlog
 sqlalchemy
 psycopg2-binary
+PyJWT
+cryptography
