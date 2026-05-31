@@ -17,19 +17,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Disable shallow clones for better relevancy of analysis
-      - name: SonarCloud Scan
-        # use different uses as it facing error in github
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=Vib-Harsh_SocityOne \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.exclusions=**/node_modules/**, **/.github/**, **/build/**, **/dist/**, **/.next/**
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   auto-merge:
     name: Auto Merge PR
     needs: sonarcloud
