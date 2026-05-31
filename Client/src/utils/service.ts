@@ -1,8 +1,9 @@
 import axios from "axios";
 import { triggerGlobalException } from "../context";
+import { config } from "../core/config";
 
 export const service = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: config.BASE_URL,
   timeout: 2000,
   withCredentials: true,
 });
@@ -21,7 +22,9 @@ service.interceptors.response.use(
 
     if (silent !== true) {
       // Trigger the common extraction handler (toaster)
+      console.log("HERE CALLING ", error.response);
       const errorMsg =
+        error.response?.data?.detail ||
         error.response?.data?.message ||
         error.response?.data?.error ||
         error.message ||

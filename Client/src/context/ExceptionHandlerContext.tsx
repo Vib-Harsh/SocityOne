@@ -126,7 +126,7 @@ export const ExceptionHandlerProvider: React.FC<{ children: ReactNode }> = ({
     } else {
       // Normal Priority: Show Ant Design error toaster
       message.error({
-        content: `[${source}] ${errorMsg}`,
+        content: `${errorMsg}`,
         duration: 4.5,
         style: { marginTop: "10vh" },
       });

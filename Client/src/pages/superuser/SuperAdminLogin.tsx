@@ -4,8 +4,10 @@ import { Mail, Lock, ArrowRight, Eye, EyeOff, Sun, Moon } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { loginSuper } from "../../services";
 import type { superUserLogin } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 const SuperAdminLogin: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm<superUserLogin>();
   const [loading, setLoading] = useState(false);
   const [loginStatus, setLoginStatus] = useState<
@@ -17,35 +19,18 @@ const SuperAdminLogin: React.FC = () => {
   const onFinish = async (values: superUserLogin) => {
     setLoading(true);
     setLoginStatus("authenticating");
-    // Simulate minor delay
     setTimeout(async () => {
       try {
         const res = await loginSuper(values);
-        console.log(res);
+        setLoginStatus("success");
+        setLoading(false);
+        localStorage.setItem("token", res.token);
+        navigate("/admin/dashboard");
       } catch (_error) {
         setLoginStatus("error");
         setLoading(false);
-        // throw new Error(error, { cause: error });
       }
-      // if (
-      //   values.email === "admin@societyone.com" &&
-      //   values.password === "adminpassword123"
-      // ) {
-      //   setLoginStatus("success");
-      //   setLoading(false);
-      //   message.success({
-      //     content: "Access Granted! Redirecting to dashboard...",
-      //     style: { marginTop: "10vh" },
-      //   });
-      // } else {
-      //   setLoginStatus("error");
-      //   setLoading(false);
-      //   message.error({
-      //     content: "Authentication failed. Please check credentials.",
-      //     style: { marginTop: "10vh" },
-      //   });
-      // }
-    }, 400);
+    }, 500);
   };
 
   return (

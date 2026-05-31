@@ -13,5 +13,13 @@ export default defineConfig(({ mode }) => {
     server: {
       port: port,
     },
-  }
+    define: {
+      "import.meta.env.PORT": JSON.stringify(env.PORT),
+      "import.meta.env.ENVIRONMENT": JSON.stringify(env.ENVIRONMENT),
+      "import.meta.env.API_BASE_URL": JSON.stringify(env.BASE_URL),
+      "import.meta.env.API_KEY": JSON.stringify(env.API_KEY),
+      "import.meta.env.APPLICATION_KEY": JSON.stringify(env.APPLICATION_KEY),
+    },
+  };
 })
+

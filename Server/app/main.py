@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.api.routes import api_router
 from app.utils.logger import logger
@@ -8,6 +9,14 @@ import traceback
 
 
 app = FastAPI(title="SocietyOne API", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 init_db()
 @app.exception_handler(Exception)

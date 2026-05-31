@@ -33,4 +33,15 @@ class Settings:
     IS_DEV: bool = ENVIRONMENT.lower() == "development"
     DATABASE_URL: str = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 
+    CORS_ORIGINS: list[str] = []
+    cors_origins_env = os.getenv("CORS_ORIGINS", "")
+    if cors_origins_env:
+        CORS_ORIGINS = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
+    else:
+        CORS_ORIGINS = [
+            "http://localhost:8082",
+            "http://127.0.0.1:8082",
+            "http://localhost:8081",
+        ]
+
 settings = Settings()

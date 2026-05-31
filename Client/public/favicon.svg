@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <!-- Definitions for gradients -->
+  <defs>
+    <linearGradient id="fav-violet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+
+    <linearGradient id="fav-cyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+
+    <linearGradient id="fav-warm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#EF4444" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clean, bold interlocking ribbons for maximum legibility at small sizes -->
+  <g>
+    <!-- Ribbon A (Top Loop of S) -->
+    <path d="M 64,16 
+             L 96,34 
+             L 96,48 
+             L 64,30 
+             L 42,42 
+             L 42,54 
+             L 64,42 
+             L 76,49 
+             C 86,55 90,64 90,72 
+             C 90,82 82,90 68,98 
+             L 64,96 
+             L 64,82 
+             C 74,76 78,71 78,66 
+             C 78,61 74,57 68,54 
+             L 64,51 
+             L 32,33 Z" 
+          fill="url(#fav-violet)" />
+
+    <!-- Ribbon B (Bottom Loop of S) -->
+    <path d="M 64,112 
+             L 32,94 
+             L 32,80 
+             L 64,98 
+             L 86,86 
+             L 86,74 
+             L 64,86 
+             L 52,79 
+             C 42,73 38,64 38,56 
+             C 38,46 46,38 60,30 
+             L 64,32 
+             L 64,46 
+             C 54,52 50,57 50,62 
+             C 50,67 54,71 60,74 
+             L 64,77 
+             L 96,95 Z" 
+          fill="url(#fav-cyan)" />
+
+    <!-- Center Pillar 1 -->
+    <path d="M 60,30 
+             L 68,26 
+             L 68,90 
+             L 60,94 Z" 
+          fill="url(#fav-warm)" />
+  </g>
+</svg>

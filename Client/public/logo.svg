@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="100%" height="100%">
+  <!-- Definitions for gradients and styles -->
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="logo-violet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+
+    <linearGradient id="logo-cyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#4F46E5" />
+    </linearGradient>
+
+    <linearGradient id="logo-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#EF4444" />
+    </linearGradient>
+
+    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+
+    <!-- Shadow filter for depth -->
+    <filter id="logo-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#4F46E5" flood-opacity="0.2" />
+    </filter>
+
+    <style>
+      .brand-text {
+        font-family: 'Outfit', 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 52px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+      }
+      .brand-society {
+        fill: #111827; /* Dark charcoal for light backgrounds */
+      }
+      .brand-one {
+        fill: url(#text-gradient);
+      }
+      @media (prefers-color-scheme: dark) {
+        .brand-society {
+          fill: #FFFFFF; /* Pure white in dark mode */
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- Logo Mark (scaled and positioned on the left, x: 20 to 140) -->
+  <g transform="translate(15, 12) scale(0.266)" filter="url(#logo-shadow)">
+    <!-- Outer Shield -->
+    <path d="M 256,36 L 426,134 L 426,330 L 256,428 L 86,330 L 86,134 Z" fill="none" stroke="url(#logo-cyan)" stroke-width="5" opacity="0.3" />
+    
+    <!-- Top Ribbon S -->
+    <path d="M 256,88 L 380,160 L 380,210 L 256,138 L 172,186 L 172,236 L 256,188 L 300,214 C 334,234 350,266 350,300 C 350,344 312,374 256,406 L 230,391 L 230,340 L 256,355 C 290,335 304,315 304,296 C 304,282 296,270 280,260 L 256,246 L 132,174 Z" fill="url(#logo-violet)" />
+    
+    <!-- Bottom Ribbon S -->
+    <path d="M 256,424 L 132,352 L 132,302 L 256,374 L 340,326 L 340,276 L 256,324 L 212,298 C 178,278 162,246 162,212 C 162,168 200,138 256,106 L 282,121 L 282,172 L 256,157 C 222,177 208,197 208,216 C 208,230 216,242 232,252 L 256,266 L 380,338 Z" fill="url(#logo-cyan)" />
+    
+    <!-- Center Pillar 1 -->
+    <path d="M 242,142 L 270,126 L 270,336 L 242,352 Z" fill="url(#logo-accent)" opacity="0.95" />
+    
+    <!-- Glowing beacon -->
+    <circle cx="256" cy="236" r="14" fill="#FBBF24" />
+  </g>
+
+  <!-- Brand Typography (Wordmark) -->
+  <text x="165" y="98" class="brand-text">
+    <tspan class="brand-society">Society</tspan><tspan class="brand-one">One</tspan>
+  </text>
+
+  <!-- Tagline / Subtitle (Representing unified management) -->
+  <text x="167" y="128" font-family="'Outfit', 'Inter', sans-serif" font-size="14px" font-weight="500" fill="#9CA3AF" letter-spacing="1.5px">
+    SOCIETY &amp; RESIDENTIAL MANAGEMENT
+  </text>
+</svg>
