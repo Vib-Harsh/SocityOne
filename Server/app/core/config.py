@@ -10,6 +10,8 @@ class Settings:
     if not FERNET_KEY:
         raise ValueError("FERNET_KEY is required")
     TOKEN_SECRET_KEY: str = os.getenv("TOKEN_SECRET_KEY", "")
+    API_KEY: str = os.getenv("API_KEY", "")
+    APPLICATION_KEY: str = os.getenv("APPLICATION_KEY", "")
     
 
     # Postgres Database ...

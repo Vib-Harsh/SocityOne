@@ -1,1 +1,2 @@
-export * from "./superuser"
+export * from "./superuser";
+export * from "./error";

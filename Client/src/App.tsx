@@ -7,9 +7,13 @@ import {
   RoleMaster,
   ModuleMaster,
   SubmoduleMaster,
+  RouteNotFound,
+  AccessDenied,
+  ServerError,
 } from "./pages";
 import Layout from "./components/Layout";
 import { SUPERUSER_NAVIGATION } from "./constant/superuser.constant";
+import { url } from "./constant";
 
 function App() {
   return (
@@ -17,16 +21,18 @@ function App() {
       <Routes>
         <Route path="/admin_login" element={<SuperAdminLogin />} />
         <Route
-          path="/admin"
+          path={url.SUPERUSER.dashboard}
           element={<Layout navigation={SUPERUSER_NAVIGATION} />}
         >
-          <Route path="" element={<AdminDashboard />} />
-          <Route path="users" element={<UserMaster />} />
-          <Route path="roles" element={<RoleMaster />} />
-          <Route path="module" element={<ModuleMaster />} />
-          <Route path="sub-module" element={<SubmoduleMaster />} />
+          <Route path={url.SUPERUSER.dashboard} element={<AdminDashboard />} />
+          <Route path={url.SUPERUSER.users} element={<UserMaster />} />
+          <Route path={url.SUPERUSER.roles} element={<RoleMaster />} />
+          <Route path={url.SUPERUSER.module} element={<ModuleMaster />} />
+          <Route path={url.SUPERUSER.submodule} element={<SubmoduleMaster />} />
         </Route>
-        <Route path="*" element={<SuperAdminLogin />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
+        <Route path="/server-error" element={<ServerError />} />
+        <Route path="*" element={<RouteNotFound />} />
       </Routes>
     </>
   );

@@ -8,12 +8,21 @@ export const service = axios.create({
   withCredentials: true,
 });
 
-service.interceptors.request.use((config) => {
-  return config;
+service.interceptors.request.use((request) => {
+  request.headers["x-api-key"] = config.API_KEY;
+  request.headers["x-application-key"] = config.APPLICATION_KEY;
+  if (localStorage.getItem("auth_token")) {
+    request.headers["authorization"] =
+      `Bearer ${localStorage.getItem("auth_token")}`;
+  }
+  return request;
 });
 
 service.interceptors.response.use(
   (response) => {
+    if (response.headers["new-token"]) {
+      localStorage.setItem("auth_token", response.headers["new-token"]);
+    }
     return response;
   },
   (error) => {
