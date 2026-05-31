@@ -1,111 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* Configure Tailwind v4 Theme mappings */
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-bg-base: var(--color-bg-base);
+  --color-bg-card: var(--color-bg-card);
+  --color-border-custom: var(--color-border-custom);
+  --color-text-base: var(--color-text-base);
+  --color-text-muted: var(--color-text-muted);
+}
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  
+    /* Centralized Light Mode Palette */
+    --color-primary: #7c3aed;
+    --color-primary-hover: #6d28d9;
+    --color-bg-base: #f1f5f9;
+    --color-bg-card: rgba(255, 255, 255, 0.75);
+    --color-border-custom: rgba(0, 0, 0, 0.08);
+    --color-text-base: #0f172a;
+    --color-text-muted: #475569;
+  }
+  
+  /* Centralized Dark Mode Palette override */
+  .dark {
+    --color-bg-base: #090d16;
+    --color-bg-card: rgba(13, 21, 37, 0.45);
+    --color-border-custom: rgba(255, 255, 255, 0.08);
+    --color-text-base: #f8fafc;
+    --color-text-muted: #94a3b8;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-base);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+  }
+/* Custom background ambient glow orbs */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+  animation: float 22s ease-in-out infinite alternate;
+  transition: opacity 0.5s ease;
+}
+
+/* In light mode, reduce glowing intensity or change glows to be softer */
+:root:not(.dark) .ambient-glow {
+  opacity: 0.05;
+}
+
+.glow-purple {
+  background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+  width: 500px;
+  height: 500px;
+  top: -10%;
+  left: -10%;
+}
+.glow-teal {
+  background: radial-gradient(circle, #0d9488 0%, transparent 70%);
+  width: 600px;
+  height: 600px;
+  bottom: -15%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+.glow-blue {
+  background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  left: 60%;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+
+  100% {
+    transform: translate(-30px, 20px) scale(0.95);
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* SVG Circuit Animation for Super Admin Badge */
+.circuit-line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dash 6s linear infinite;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
   }
 }
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+.glow-svg-element {
+  filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4));
+}
+.dark .glow-svg-element {
+  filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.6));
+}
+/* Interactive link class */
+.terminal-link {
+  font-size: 13px;
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+  text-decoration: none;
 }
 
-body {
-  margin: 0;
+.terminal-link:hover {
+  color: var(--color-primary-hover);
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Keyframe for entry animations */
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
