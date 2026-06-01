@@ -1,7 +1,6 @@
-
 from typing import Optional, TypedDict, cast
 from app.models.role import Role
-from sqlalchemy import ForeignKey, Integer, Column, String
+from sqlalchemy import ForeignKey, Integer, Column, String, Enum
 from sqlalchemy.orm import relationship
 from app.models.base import BaseModel
 from app.utils.cryptography import decryptPassword
@@ -28,9 +27,10 @@ class User(BaseModel):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
+    status = Column(Enum('Active', 'Inactive', 'Deleted', name='user_status_enum'), default="Active", nullable=False)
     role_id = Column(Integer, ForeignKey(f"{Role.__tablename__}.id"), nullable=False)
 
-    role = relationship(Role.__relation_name__, back_populates=__tablename__)
+    role = relationship(Role.__relation_name__)
 
     def toList(self)-> UserList:
         return {

@@ -1,17 +1,20 @@
 from fastapi import APIRouter, Security, HTTPException, status, Request, Response
+from fastapi.security import HTTPBearer
 from fastapi.security.api_key import APIKeyHeader
 from app.core.config import settings
 from app.utils.logger import logger
 import jwt
 
-api_key_header = APIKeyHeader(name="api_key", auto_error=False)
-application_key_header = APIKeyHeader(name="application_key", auto_error=False)
+api_key_header = APIKeyHeader(name="api_key", scheme_name="APIKeyHeader", auto_error=False)
+application_key_header = APIKeyHeader(name="application_key", scheme_name="ApplicationKeyHeader", auto_error=False)
+token_header = HTTPBearer(scheme_name="JWTToken", auto_error=False)
 
 async def get_api_key(
     request: Request,
     response: Response,
     api_key: str|None = Security(api_key_header),
-    application_key: str|None = Security(application_key_header)
+    application_key: str|None = Security(application_key_header),
+    token_credentials: str|None = Security(token_header)
 ):
     # 1. Fallback header names check (case-insensitive & hyphenated support)
     if not api_key:

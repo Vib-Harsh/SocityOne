@@ -1,6 +1,6 @@
 import { LayoutDashboard, Users, Wrench } from "lucide-react";
-import type { ModuleConfig } from "../components/Layout";
-import { SUPERUSER } from "./URL";
+import type { ModuleConfig } from "@/components/Layout";
+import { SUPERUSER } from "@/constant/URL";
 
 export const SUPERUSER_NAVIGATION: ModuleConfig[] = [
   {

@@ -11,9 +11,10 @@ import {
   AccessDenied,
   ServerError,
 } from "./pages";
-import Layout from "./components/Layout";
+import Layout from "@/components/Layout";
 import { SUPERUSER_NAVIGATION } from "./constant/superuser.constant";
 import { url } from "./constant";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -22,7 +23,11 @@ function App() {
         <Route path="/admin_login" element={<SuperAdminLogin />} />
         <Route
           path={url.SUPERUSER.dashboard}
-          element={<Layout navigation={SUPERUSER_NAVIGATION} />}
+          element={
+            <ProtectedRoute>
+              <Layout navigation={SUPERUSER_NAVIGATION} />
+            </ProtectedRoute>
+          }
         >
           <Route path={url.SUPERUSER.dashboard} element={<AdminDashboard />} />
           <Route path={url.SUPERUSER.users} element={<UserMaster />} />

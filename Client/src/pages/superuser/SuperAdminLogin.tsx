@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Form, Input, Button, ConfigProvider, theme as antTheme } from "antd";
 import { Mail, Lock, ArrowRight, Eye, EyeOff, Sun, Moon } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
-import { loginSuper } from "../../services";
-import type { superUserLogin } from "../../types";
+import { useTheme } from "@/context/ThemeContext";
+import { loginSuper } from "@/services";
+import type { superUserLogin } from "@/types";
 import { useNavigate } from "react-router-dom";
-import { url } from "../../constant";
+import { url } from "@/constant";
 
 const SuperAdminLogin: React.FC = () => {
   const navigate = useNavigate();

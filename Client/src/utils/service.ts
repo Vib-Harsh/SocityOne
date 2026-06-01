@@ -11,9 +11,9 @@ export const service = axios.create({
 service.interceptors.request.use((request) => {
   request.headers["x-api-key"] = config.API_KEY;
   request.headers["x-application-key"] = config.APPLICATION_KEY;
-  if (localStorage.getItem("auth_token")) {
+  if (localStorage.getItem("token")) {
     request.headers["authorization"] =
-      `Bearer ${localStorage.getItem("auth_token")}`;
+      `Bearer ${localStorage.getItem("token")}`;
   }
   return request;
 });
@@ -21,7 +21,7 @@ service.interceptors.request.use((request) => {
 service.interceptors.response.use(
   (response) => {
     if (response.headers["new-token"]) {
-      localStorage.setItem("auth_token", response.headers["new-token"]);
+      localStorage.setItem("token", response.headers["new-token"]);
     }
     return response;
   },
