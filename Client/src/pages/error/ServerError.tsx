@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MoveLeft, RotateCw, ServerCrash } from "lucide-react";
 
@@ -7,15 +7,26 @@ export const ServerError: React.FC = () => {
   const [isRetrying, setIsRetrying] = useState(false);
   const [retryMessage, setRetryMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    const errorActive = sessionStorage.getItem("serverErrorActive");
+    if (!errorActive) {
+      // If there is no active error flag (manual refresh or direct entry), redirect to "/"
+      // navigate("/");
+    } else {
+      // Clear the flag so subsequent browser reloads/refreshes will redirect to "/"
+      sessionStorage.removeItem("serverErrorActive");
+    }
+  }, [navigate]);
+
   const handleRetry = () => {
     setIsRetrying(true);
     setRetryMessage(null);
-    
-    // Premium feedback mock latency
+
+    // Premium feedback latency, then navigate to "/" to attempt re-handshake
     setTimeout(() => {
       setIsRetrying(false);
-      setRetryMessage("Core database failed to respond. Please try again later.");
-    }, 1800);
+      navigate("/");
+    }, 1200);
   };
 
   return (
@@ -27,11 +38,11 @@ export const ServerError: React.FC = () => {
       <div className="ambient-glow absolute rounded-full bg-radial from-amber-600 to-transparent w-[500px] height-[500px] top-10 right-10 opacity-10 dark:opacity-15 blur-[120px] pointer-events-none" />
 
       {/* Cyber Grid Pattern */}
-      <div 
+      <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
         style={{
           backgroundImage: `radial-gradient(var(--color-text-base) 1px, transparent 1px)`,
-          backgroundSize: '24px 24px'
+          backgroundSize: "24px 24px",
         }}
       />
 
@@ -53,23 +64,97 @@ export const ServerError: React.FC = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             {/* Server Chassis 1 */}
-            <rect x="50" y="50" width="100" height="28" rx="3" fill="currentColor" fillOpacity="0.1" />
-            <circle cx="70" cy="64" r="3.5" fill="#f59e0b" className="animate-pulse" />
+            <rect
+              x="50"
+              y="50"
+              width="100"
+              height="28"
+              rx="3"
+              fill="currentColor"
+              fillOpacity="0.1"
+            />
+            <circle
+              cx="70"
+              cy="64"
+              r="3.5"
+              fill="#f59e0b"
+              className="animate-pulse"
+            />
             <circle cx="85" cy="64" r="2.5" fill="#22c55e" />
-            <line x1="105" y1="64" x2="135" y2="64" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
+            <line
+              x1="105"
+              y1="64"
+              x2="135"
+              y2="64"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeDasharray="3 3"
+            />
 
             {/* Server Chassis 2 (Failing Node) */}
-            <rect x="50" y="90" width="100" height="28" rx="3" fill="currentColor" fillOpacity="0.1" strokeDasharray="4 2" />
-            <circle cx="70" cy="104" r="3.5" fill="#ef4444" className="animate-ping" style={{ animationDuration: '1.2s' }} />
+            <rect
+              x="50"
+              y="90"
+              width="100"
+              height="28"
+              rx="3"
+              fill="currentColor"
+              fillOpacity="0.1"
+              strokeDasharray="4 2"
+            />
+            <circle
+              cx="70"
+              cy="104"
+              r="3.5"
+              fill="#ef4444"
+              className="animate-ping"
+              style={{ animationDuration: "1.2s" }}
+            />
             <circle cx="70" cy="104" r="3.5" fill="#ef4444" />
-            <circle cx="85" cy="104" r="2.5" fill="#f59e0b" className="animate-pulse" />
-            <line x1="105" y1="104" x2="135" y2="104" stroke="#ef4444" strokeWidth="2" strokeDasharray="1 3" />
+            <circle
+              cx="85"
+              cy="104"
+              r="2.5"
+              fill="#f59e0b"
+              className="animate-pulse"
+            />
+            <line
+              x1="105"
+              y1="104"
+              x2="135"
+              y2="104"
+              stroke="#ef4444"
+              strokeWidth="2"
+              strokeDasharray="1 3"
+            />
 
             {/* Server Chassis 3 */}
-            <rect x="50" y="130" width="100" height="28" rx="3" fill="currentColor" fillOpacity="0.1" />
+            <rect
+              x="50"
+              y="130"
+              width="100"
+              height="28"
+              rx="3"
+              fill="currentColor"
+              fillOpacity="0.1"
+            />
             <circle cx="70" cy="144" r="3.5" fill="#f59e0b" />
-            <circle cx="85" cy="144" r="2.5" fill="#22c55e" className="animate-pulse" />
-            <line x1="105" y1="144" x2="135" y2="144" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
+            <circle
+              cx="85"
+              cy="144"
+              r="2.5"
+              fill="#22c55e"
+              className="animate-pulse"
+            />
+            <line
+              x1="105"
+              y1="144"
+              x2="135"
+              y2="144"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
 
             {/* Warning Diagnostic Overlay */}
             <path d="M12 10 L16 10" stroke="#f59e0b" />
@@ -91,7 +176,8 @@ export const ServerError: React.FC = () => {
           Server Link Severed
         </h1>
         <p className="mt-4 text-base sm:text-lg text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed">
-          The internal microservices network failed to establish a handshake. The core database may be updating.
+          The internal microservices network failed to establish a handshake.
+          The core database may be updating.
         </p>
 
         {/* Digital Clearance Code */}
@@ -121,19 +207,22 @@ export const ServerError: React.FC = () => {
             <MoveLeft className="w-4 h-4" />
             Go Back
           </button>
-          
+
           <button
             onClick={handleRetry}
             disabled={isRetrying}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-sm font-medium text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500/40 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/35 hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none cursor-pointer active:scale-95"
           >
-            <RotateCw className={`w-4 h-4 ${isRetrying ? "animate-spin" : ""}`} />
+            <RotateCw
+              className={`w-4 h-4 ${isRetrying ? "animate-spin" : ""}`}
+            />
             {isRetrying ? "Reconnecting..." : "Retry Connection"}
           </button>
         </div>
 
         <div className="mt-12 text-xs text-[var(--color-text-muted)] opacity-60">
-          The operations dashboard is logging this interruption. Automatic diagnostics are already in progress.
+          The operations dashboard is logging this interruption. Automatic
+          diagnostics are already in progress.
         </div>
       </div>
     </div>

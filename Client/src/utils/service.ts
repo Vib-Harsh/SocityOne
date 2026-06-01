@@ -26,6 +26,13 @@ service.interceptors.response.use(
     return response;
   },
   (error) => {
+    // Check if the backend is down / network error
+    if (!error.response || error.code === "ERR_NETWORK" || error.message?.includes("Network Error")) {
+      sessionStorage.setItem("serverErrorActive", "true");
+      window.location.href = "/server-error";
+      return Promise.reject(error);
+    }
+
     // Check if the silent client option (Silent) is enabled
     const silent = error.config ? error.config.silent : false;
 
