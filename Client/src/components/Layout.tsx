@@ -155,7 +155,8 @@ const Layout: React.FC<{ navigation: ModuleConfig[] }> = ({ navigation }) => {
   // Helper calculation for Breadcrumbs
   const getBreadcrumbs = () => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
-    if (pathSegments.length === 0) return [{ label: "Home", active: true }];
+    if (pathSegments.length === 0)
+      return [{ label: "Home", path: "/", active: true }];
 
     return pathSegments.map((segment, index) => {
       const path = `/${pathSegments.slice(0, index + 1).join("/")}`;
@@ -172,8 +173,8 @@ const Layout: React.FC<{ navigation: ModuleConfig[] }> = ({ navigation }) => {
     });
   };
   const rootPath = useMemo(() => {
-    const path = navigation[0].submodules?.[0].path || navigation[0].path;
-    return path;
+    const path = navigation[0]?.submodules?.[0]?.path || navigation[0]?.path;
+    return path || "/";
   }, [navigation]);
 
   const breadcrumbs = getBreadcrumbs();

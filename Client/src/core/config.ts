@@ -20,8 +20,8 @@ class Config {
   public readonly APPLICATION_KEY: string;
   constructor() {
     this.PORT = parseInt(import.meta.env.PORT || "5173", 10);
-    this.ENVIRONMENT = import.meta.env.ENVIRONMENT;
-    this.BASE_URL = import.meta.env.API_BASE_URL;
+    this.ENVIRONMENT = import.meta.env.ENVIRONMENT || "development";
+    this.BASE_URL = import.meta.env.API_BASE_URL || "";
     this.API_KEY = import.meta.env.API_KEY || "";
     this.APPLICATION_KEY = import.meta.env.APPLICATION_KEY || "";
 
