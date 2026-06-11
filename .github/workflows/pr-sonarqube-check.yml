@@ -32,6 +32,28 @@ jobs:
           cd SocityOne
           npm ci
 
+      - name: Run React Native app tests with coverage
+        run: |
+          cd SocityOne
+          npm run test -- --coverage
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          cd Server
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest-cov
+
+      - name: Run Python tests with coverage
+        run: |
+          cd Server
+          PYTHONPATH=. pytest --cov=app --cov-report=xml
+
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v6
         env:
