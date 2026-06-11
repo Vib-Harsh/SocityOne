@@ -12,13 +12,65 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: society_one
+          POSTGRES_PASSWORD: dummy_password
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Disable shallow clones for better relevancy of analysis
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Client dependencies
+        run: |
+          cd Client
+          yarn install --frozen-lockfile
+
+      - name: Install React Native app dependencies
+        run: |
+          cd SocityOne
+          npm ci
+
+      - name: Run React Native app tests with coverage
+        run: |
+          cd SocityOne
+          npm run test -- --coverage
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          cd Server
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest-cov
+
+      - name: Run Python tests with coverage
+        run: |
+          cd Server
+          cp env.example .env
+          PYTHONPATH=. pytest --cov=app --cov-report=xml
+
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: sonarsource/sonarqube-scan-action@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -1,13 +1,19 @@
+from app.schemas.user import UserFilter
+from app.models.user import User
+from fastapi import Query
+from typing import Optional
+from typing import cast
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from app.api.services import user_service
 from app.utils.logger import logger
 
-def list_users(db: Session):
-    """List all users."""
-    logger.info("Listing users in controller")
-    users = user_service.get_all_users(db)
-    return [user.toList() for user in users]
+def list_users(db: Session, filter: UserFilter):
+    """List all users with filters."""
+    logger.info("Listing users with filters in controller")
+    users = user_service.list_users(db, filter)
+    return {"data": [user.toList() for user in users], "pagination": filter}
+
 
 def get_user(db: Session, user_id: int):
     """Retrieve details of a single user."""
@@ -23,10 +29,10 @@ def get_user(db: Session, user_id: int):
 def create_new_user(db: Session, user_data: dict):
     """Create a new user."""
     logger.info("Creating a new user in controller")
-    name = user_data.get("name")
-    email = user_data.get("email")
-    password = user_data.get("password")
-    role_id = user_data.get("role_id")
+    name:str = cast(str, user_data.get("name"))
+    email:str = cast(str, user_data.get("email"))
+    password:str = cast(str, user_data.get("password"))
+    role_id:int = cast(int, user_data.get("role_id"))
     
     if not all([name, email, password, role_id]):
         raise HTTPException(
@@ -48,7 +54,7 @@ def create_new_user(db: Session, user_data: dict):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Failed to create user. Ensure that role_id {role_id} is valid."
         )
-    return user.toDict()
+    return user.toList()
 
 def update_existing_user(db: Session, user_id: int, user_data: dict):
     """Update an existing user."""

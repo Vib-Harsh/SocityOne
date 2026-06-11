@@ -6,3 +6,6 @@ sqlalchemy
 psycopg2-binary
 PyJWT
 cryptography
+pytest
+httpx
+alembic

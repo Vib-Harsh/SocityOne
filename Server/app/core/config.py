@@ -4,12 +4,15 @@ import os
 load_dotenv()
 
 class Settings:
+    HOST: str = os.getenv("HOST", "localhost")
     PORT: int = int(os.getenv("PORT", 8000))
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     FERNET_KEY: str = os.getenv("FERNET_KEY", "")
     if not FERNET_KEY:
         raise ValueError("FERNET_KEY is required")
     TOKEN_SECRET_KEY: str = os.getenv("TOKEN_SECRET_KEY", "")
+    API_KEY: str = os.getenv("API_KEY", "")
+    APPLICATION_KEY: str = os.getenv("APPLICATION_KEY", "")
     
 
     # Postgres Database ...

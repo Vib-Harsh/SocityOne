@@ -8,15 +8,33 @@ export const service = axios.create({
   withCredentials: true,
 });
 
-service.interceptors.request.use((config) => {
-  return config;
+export const API_V1 = "api/v1/";
+
+service.interceptors.request.use((request) => {
+  request.headers["x-api-key"] = config.API_KEY;
+  request.headers["x-application-key"] = config.APPLICATION_KEY;
+  if (localStorage.getItem("token")) {
+    request.headers["authorization"] =
+      `Bearer ${localStorage.getItem("token")}`;
+  }
+  return request;
 });
 
 service.interceptors.response.use(
   (response) => {
+    if (response.headers["new-token"]) {
+      localStorage.setItem("token", response.headers["new-token"]);
+    }
     return response;
   },
   (error) => {
+    // Check if the backend is down / network error
+    if (!error.response || error.code === "ERR_NETWORK" || error.message?.includes("Network Error")) {
+      sessionStorage.setItem("serverErrorActive", "true");
+      window.location.href = "/server-error";
+      return Promise.reject(error);
+    }
+
     // Check if the silent client option (Silent) is enabled
     const silent = error.config ? error.config.silent : false;
 
