@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
+from app.schemas.common import Filter
+from app.models.user import UserStatus
 
 class UserBase(BaseModel):
     name: str
@@ -14,3 +16,6 @@ class UserUpdate(BaseModel):
     email: Optional[str] = None
     password: Optional[str] = None
     role_id: Optional[int] = None
+
+class UserFilter(Filter):
+    status: Optional[UserStatus] = None

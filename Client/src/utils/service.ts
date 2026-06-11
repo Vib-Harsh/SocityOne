@@ -8,6 +8,8 @@ export const service = axios.create({
   withCredentials: true,
 });
 
+export const API_V1 = "api/v1/";
+
 service.interceptors.request.use((request) => {
   request.headers["x-api-key"] = config.API_KEY;
   request.headers["x-application-key"] = config.APPLICATION_KEY;

@@ -1,16 +1,15 @@
-from app.schemas.common import Filter
 from fastapi import Query
 from typing import Optional
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.api.controllers.v1 import user_controller
-from app.schemas.user import UserCreate, UserUpdate
+from app.schemas.user import UserCreate, UserUpdate, UserFilter
 
 router = APIRouter()
 
 @router.get("/", summary="List Users", description="get all user list with pagination search and sort")
-def read_users(filter: Filter = Depends(), db: Session = Depends(get_db)):
+def read_users(filter: UserFilter = Depends(), db: Session = Depends(get_db)):
     return user_controller.list_users(db, filter)
 
 @router.get("/{user_id}", summary="Get User Detail", description="Retrieve details of a user by their ID.")

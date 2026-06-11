@@ -29,25 +29,25 @@ def get_headers(api_key=None, app_key=None, token=None):
 def test_health_no_headers():
     response = client.get("/health/")
     assert response.status_code == 401
-    assert response.json()["detail"] == "API Key is missing in the headers"
+    assert response.json()["detail"] == "Unauthorized Access"
 
 def test_health_missing_app_key():
     headers = get_headers(api_key=settings.API_KEY)
     response = client.get("/health/", headers=headers)
     assert response.status_code == 401
-    assert response.json()["detail"] == "Application Key is missing in the headers"
+    assert response.json()["detail"] == "Unauthorized Application"
 
 def test_health_invalid_api_key():
     headers = get_headers(api_key="wrong_api_key", app_key=settings.APPLICATION_KEY)
     response = client.get("/health/", headers=headers)
     assert response.status_code == 403
-    assert response.json()["detail"] == "Invalid API Key"
+    assert response.json()["detail"] == "Access Denied"
 
 def test_health_invalid_app_key():
     headers = get_headers(api_key=settings.API_KEY, app_key="wrong_app_key")
     response = client.get("/health/", headers=headers)
     assert response.status_code == 403
-    assert response.json()["detail"] == "Invalid Application Key"
+    assert response.json()["detail"] == "Application Access Denied"
 
 def test_health_valid_keys():
     headers = get_headers(api_key=settings.API_KEY, app_key=settings.APPLICATION_KEY)

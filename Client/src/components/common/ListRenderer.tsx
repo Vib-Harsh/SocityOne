@@ -227,13 +227,13 @@ const ListRenderer = <T,>({
 
     // 2. Email links with hover states and inline envelope icons
     if (
-      String(col.value).toLowerCase() === "email" ||
+      String(col.value).toLowerCase().includes("email") ||
       (stringValue.includes("@") && stringValue.includes("."))
     ) {
       return (
         <a
           href={`mailto:${stringValue}`}
-          className="inline-flex items-center gap-1.5 text-xs text-primary hover:text-primary-hover hover:underline transition-colors max-w-xs truncate"
+          className="inline-flex items-center gap-1.5 max-w-xs truncate text-xs text-primary hover:text-primary-hover hover:underline transition-colors"
           title={stringValue}
         >
           <Mail className="w-3.5 h-3.5 flex-shrink-0 opacity-60 text-text-muted" />

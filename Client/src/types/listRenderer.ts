@@ -25,6 +25,13 @@ export type ListPagination<T> = {
   total_count: number;
 };
 
+export type ListModal<T> = {
+  show: boolean;
+  action: action_key | "";
+  item: T | null;
+  loading: boolean;
+};
+
 export type ListProperties<T> = {
   onSearch: (searchValue: string) => void;
   searchPlaceholder?: string;

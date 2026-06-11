@@ -18,9 +18,9 @@ async def get_api_key(
 ):
     # 1. Fallback header names check (case-insensitive & hyphenated support)
     if not api_key:
-        api_key: str|None = request.headers.get("x-api-key")
+        api_key = request.headers.get("x-api-key")
     if not application_key:
-        application_key: str|None = request.headers.get("x-application-key")
+        application_key = request.headers.get("x-application-key")
 
     # 2. Check presence of keys
     if not api_key:

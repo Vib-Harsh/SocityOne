@@ -1,4 +1,4 @@
-from app.schemas.common import Filter
+from app.schemas.user import UserFilter
 from app.models.user import User
 from fastapi import Query
 from typing import Optional
@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.api.services import user_service
 from app.utils.logger import logger
 
-def list_users(db: Session, filter: Filter):
+def list_users(db: Session, filter: UserFilter):
     """List all users with filters."""
     logger.info("Listing users with filters in controller")
     users = user_service.list_users(db, filter)

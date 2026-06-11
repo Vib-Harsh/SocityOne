@@ -3,6 +3,7 @@
 from typing import Optional, TypedDict, cast
 from sqlalchemy import ForeignKey, Integer
 from sqlalchemy import Column, String
+from sqlalchemy.orm import Mapped, mapped_column
 from app.models.base import BaseModel
 
 class BaseRole(TypedDict):
@@ -18,8 +19,8 @@ class Role(BaseModel):
     __tablename__ = "roles"
     __relation_name__ = "Role"
 
-    name = Column(String, nullable=False)
-    power_level = Column(Integer, nullable=False, default=0)
+    name: Mapped[str] = mapped_column(String, nullable=False)
+    power_level: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
     def toList(self) -> BaseRole:
         return {
