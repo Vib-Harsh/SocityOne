@@ -101,6 +101,7 @@ export interface FooterProperties {
   onCancel?: () => void;
   showSubmit?: boolean;
   submitText?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit?: (values?: any) => void;
   submitLoading?: boolean;
   submitDisabled?: boolean;
