@@ -4,6 +4,7 @@ import os
 load_dotenv()
 
 class Settings:
+    HOST: str = os.getenv("HOST", "localhost")
     PORT: int = int(os.getenv("PORT", 8000))
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     FERNET_KEY: str = os.getenv("FERNET_KEY", "")
