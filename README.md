@@ -1,4 +1,4 @@
-# SocityOne
+# SocietyOne
 
 SocityOne is a comprehensive and centralized application designed for modern Society Management. The platform provides seamless communication, administration, and management of residential societies, flats, and bungalows.
 
