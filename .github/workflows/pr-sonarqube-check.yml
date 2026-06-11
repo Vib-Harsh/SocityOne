@@ -50,6 +50,11 @@ jobs:
           pip install pytest-cov
 
       - name: Run Python tests with coverage
+        env:
+          FERNET_KEY: "dummy_key"
+          DATABASE_PASSWORD: "dummy_password"
+          SUPER_ADMIN_EMAIL: "admin@example.com"
+          SUPER_ADMIN_PASSWORD: "dummy_password"
         run: |
           cd Server
           PYTHONPATH=. pytest --cov=app --cov-report=xml
