@@ -7,5 +7,5 @@ psycopg2-binary
 PyJWT
 cryptography
 pytest
-httpx
+httpx2
 alembic

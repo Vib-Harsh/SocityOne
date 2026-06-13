@@ -1,10 +1,12 @@
-
-
-from typing import Optional, TypedDict, cast
-from sqlalchemy import ForeignKey, Integer
-from sqlalchemy import Column, String
-from sqlalchemy.orm import Mapped, mapped_column
+from __future__ import annotations
+from typing import TypedDict, cast, TYPE_CHECKING
+from sqlalchemy import  Integer
+from sqlalchemy import  String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import BaseModel
+
+if TYPE_CHECKING:
+    from app.models.permission import Permission
 
 class BaseRole(TypedDict):
     id: int
@@ -22,6 +24,8 @@ class Role(BaseModel):
     name: Mapped[str] = mapped_column(String, nullable=False)
     power_level: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
+    permissions: Mapped[list[Permission]] = relationship("Permission", back_populates="role", cascade="all, delete-orphan")
+
     def toList(self) -> BaseRole:
         return {
             "id": cast(int, self.id),
@@ -38,3 +42,5 @@ class Role(BaseModel):
             "updated_at": cast(str, self.updated_at)
         }
 
+    def get_permissions_list(self) -> list[dict]:
+        return [p.to_permission_dict() for p in self.permissions]

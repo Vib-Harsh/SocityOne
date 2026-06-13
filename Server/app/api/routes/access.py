@@ -13,8 +13,7 @@ async def get_api_key(
     request: Request,
     response: Response,
     api_key: str|None = Security(api_key_header),
-    application_key: str|None = Security(application_key_header),
-    token_credentials: str|None = Security(token_header)
+    application_key: str|None = Security(application_key_header)
 ):
     # 1. Fallback header names check (case-insensitive & hyphenated support)
     if not api_key:

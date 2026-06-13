@@ -6,9 +6,14 @@ from app.utils.logger import logger
 from app.core.config import settings
 from app.core.database import init_db
 import traceback
+from contextlib import asynccontextmanager
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info(f"Starting up SocietyOne API in {settings.ENVIRONMENT} mode.")
+    yield
 
-app = FastAPI(title="SocietyOne API", version="1.0.0")
+app = FastAPI(title="SocietyOne API", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -36,7 +41,3 @@ async def global_exception_handler(request: Request, exc: Exception):
     )
 
 app.include_router(api_router)
-
-@app.on_event("startup")
-async def startup_event():
-    logger.info(f"Starting up SocietyOne API in {settings.ENVIRONMENT} mode.")
